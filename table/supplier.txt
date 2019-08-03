@@ -1,0 +1,24 @@
+CREATE TABLE  "T_SUPPLIER" 
+   (	"ID_SUPPLIER" NUMBER(5,0), 
+	"NM_SUPPLIER" VARCHAR2(25), 
+	"ALAMAT" VARCHAR2(50), 
+	"NO_TLP" CHAR(13), 
+	 CONSTRAINT "TB_SUPPLIER_PK" PRIMARY KEY ("ID_SUPPLIER") ENABLE
+   )
+/
+
+
+CREATE OR REPLACE TRIGGER  "BI_TB_SUPPLIER" 
+  before insert on "T_SUPPLIER"               
+  for each row  
+begin   
+  if :NEW."ID_SUPPLIER" is null then 
+    select "TB_SUPPLIER_SEQ".nextval into :NEW."ID_SUPPLIER" from sys.dual; 
+  end if; 
+end; 
+
+/
+ALTER TRIGGER  "BI_TB_SUPPLIER" ENABLE
+/
+
+

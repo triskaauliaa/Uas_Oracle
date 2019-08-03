@@ -1,0 +1,24 @@
+CREATE TABLE  "T_CUSTOMER" 
+   (	"KD_CUSTOMER" NUMBER(5,0), 
+	"USERNAME" VARCHAR2(25), 
+	"ALAMAT" VARCHAR2(50), 
+	"NO_TLP" CHAR(13), 
+	 CONSTRAINT "TB_CUSTOMER_PK" PRIMARY KEY ("KD_CUSTOMER") ENABLE
+   )
+/
+
+
+CREATE OR REPLACE TRIGGER  "BI_TB_CUSTOMER" 
+  before insert on "T_CUSTOMER"               
+  for each row  
+begin   
+  if :NEW."ID_CUSTOMER" is null then 
+    select "TB_CUSTOMER_SEQ".nextval into :NEW."ID_CUSTOMER" from sys.dual; 
+  end if; 
+end; 
+
+/
+ALTER TRIGGER  "BI_TB_CUSTOMER" ENABLE
+/
+
+

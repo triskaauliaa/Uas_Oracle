@@ -1,0 +1,68 @@
+CREATE TABLE  "T_BARANG" 
+   (	"KD_BARANG" NUMBER(5,0), 
+	"NM_BARANG" VARCHAR2(25), 
+	"JNS_BARANG" VARCHAR2(15), 
+	"JML_BARANG" NUMBER(7,0), 
+	"HARGA" FLOAT(2), 
+	 CONSTRAINT "TB_BARANG_PK" PRIMARY KEY ("KD_BARANG") ENABLE
+   )
+/
+
+
+CREATE OR REPLACE TRIGGER  "BI_TB_BARANG" 
+  before insert on "T_BARANG"               
+  for each row  
+begin   
+  if :NEW."ID_BARANG" is null then 
+    select "TB_BARANG_SEQ".nextval into :NEW."ID_BARANG" from sys.dual; 
+  end if; 
+end; 
+
+/
+ALTER TRIGGER  "BI_TB_BARANG" ENABLE
+/
+
+
+CREATE OR REPLACE TRIGGER  "DISPLAY_JMLBARANG_CHANGES" 
+BEFORE DELETE OR INSERT OR UPDATE ON t_barang
+FOR EACH ROW
+ WHEN (new.id_barang > 0) DECLARE
+selisih number;
+BEGIN
+selisih := :new.jml - :old.jml;
+dbms_output.put_line('Nama Barang : ' || :new.nama);
+dbms_output.put_line('Jumlah Sebelumnya : ' || :old.jml);
+dbms_output.put_line('Jumlah Baru : ' || :new.jml);
+dbms_output.put_line('Selisih Jumlah : ' || selisih);
+END;
+/
+ALTER TRIGGER  "DISPLAY_JMLBARANG_CHANGES" ENABLE
+/
+
+
+CREATE OR REPLACE TRIGGER  "DISPLAY_QTYBARANG_CHANGES" 
+BEFORE
+insert or update on "T_BARANG"
+for each row
+ WHEN ((NEW.ID_BARANG > 0)) DECLARE
+   qty number;
+BEGIN
+   qty := :new.jml - :old.jml;
+
+   	IF qty >= 0 THEN
+	   UPDATE t_barang
+	   SET jml = new.jml + :old.jml
+	   WHERE id_barang = new.id_barang;
+	ENDIF;
+
+  dbms_output.put_line('Nama Barang : ' || :new.nama);
+  dbms_output.put_line('Jumlah Sebelumnya : ' || :old.jml);
+  dbms_output.put_line('Jumlah Baru : ' || :new.jml);
+  dbms_output.put_line('Selisih Jumlah : ' || qty);
+END;
+/
+ALTER TRIGGER  "DISPLAY_QTYBARANG_CHANGES" ENABLE
+/
+
+
+	

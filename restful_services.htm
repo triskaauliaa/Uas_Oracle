@@ -1,0 +1,72 @@
+<html><head><title>RESTful Services</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<base href="http://192.168.43.75:8888/apex/" />
+<style type="text/css">
+table.apex_ir_html_export {
+background-color:#F2F2F5;
+border-width:1px 1px 0px 1px;
+border-color:#C9CBD3;
+border-style:solid;
+}
+table.apex_ir_html_export td {
+color:#000000;
+font-family:Tahoma,Arial,Helvetica,Geneva,sans-serif;
+font-size:9pt;
+background-color:#EAEFF5;
+padding:8px;
+background-color:#F2F2F5;
+border-color:#ffffff #ffffff #cccccc #ffffff;
+border-style:solid solid solid solid;
+border-width:1px 0px 1px 0px;
+}
+table.apex_ir_html_export th {
+font-family:Tahoma,Arial,Helvetica,Geneva,sans-serif;
+font-size:9pt;
+padding:8px;
+background-color:#CFE0F1;
+border-color:#ffffff #ffffff #cccccc #ffffff;
+border-style:solid solid solid none;
+border-width:1px 0px 1px 0px;
+white-space:nowrap;
+}
+</style>
+<script type="text/javascript">
+window.apexir_search = {};
+apexir_search.search = function(pWorksheetId){
+  var lSearch = document.getElementById("S"+pWorksheetId).value.toUpperCase(),
+      lRows = document.getElementById("data"+pWorksheetId).getElementsByTagName("TR"),
+      lRowCount = lRows.length;
+  for (var i=0; i<lRowCount;i++){
+    if (lSearch==="") {
+      lRows[i].style.display = "";
+    } else {
+      var lCells = lRows[i].getElementsByTagName("TD");
+          lCellCount = lCells.length;
+          lFound = false;
+      for (var j=0; (!lFound && j<lCellCount);j++){
+        if (lCells[j].innerHTML.toUpperCase().indexOf(lSearch) != -1) lFound = true;
+      }
+      lRows[i].style.display = (lFound?"":"none");
+    }
+  }
+};
+
+apexir_search.searchIfEnter = function(e, pWorksheetId){
+  var keycode;
+  if(window.event){keycode = window.event.keyCode;}
+  else if (e){keycode = e.which;} else {return true;}
+  if(keycode == 13){
+    apexir_search.search(pWorksheetId);
+    return false;
+  } else { return true; };
+};
+</script>
+</head><body>
+<table border="0" cellpadding="0" cellspacing="0" class="apex_ir_html_export">
+<tr><td>Search: <input type="text" size="30" maxlength="1000" value="" id="S314850029566177831" onkeydown="return apexir_search.searchIfEnter(event, '314850029566177831');" /><input type="button" value="Search" onclick="apexir_search.search('314850029566177831')"/></td></tr>
+</table>
+<br />
+<table border="0" cellpadding="0" cellspacing="0" class="apex_ir_html_export">
+<thead><tr><th id="NAME">Module Name</th><th id="URI_PREFIX">URI Prefix</th><th id="PRIVILEGE_ID">Privilege</th><th id="STATUS">Status</th><th id="UPDATED_BY">Updated By</th><th id="UPDATED_ON">Updated</th></tr></thead><tbody id="data314850029566177831">
+<tr><td headers="NAME">crud</td><td headers="URI_PREFIX"></td><td headers="PRIVILEGE_ID"></td><td headers="STATUS">Published</td><td headers="UPDATED_BY">obe</td><td align="right" headers="UPDATED_ON">32 hours ago</td></tr>
+</tbody></table></body></html>
